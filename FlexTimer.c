@@ -46,6 +46,69 @@ volatile uint8 flag = 0;
  float  frequency = 0.0f;
  float tempValue = 0.0f;
 
+/**STATUS FLAG*/
+uint8 flag_FTM0_C0SC_status = 0;
+uint8 flag_FTM0_C1SC_status =  0;
+uint8 flag_FTM0_C2SC_status =  0;
+uint8 flag_FTM0_C3SC_status =  0;
+uint8 flag_FTM0_C4SC_status =  0;
+uint8 flag_FTM0_C5SC_status =  0;
+uint8 flag_FTM0_C6SC_status =  0;
+uint8 flag_FTM0_C7SC_status =  0;
+
+uint8 flag_FTM2_C0SC_status = 0;
+uint8 flag_FTM2_C1SC_status =  0;
+
+uint8 flag_FTM3_C0SC_status = 0;
+uint8 flag_FTM3_C1SC_status =  0;
+uint8 flag_FTM3_C2SC_status =  0;
+uint8 flag_FTM3_C3SC_status =  0;
+uint8 flag_FTM3_C4SC_status =  0;
+uint8 flag_FTM3_C5SC_status =  0;
+uint8 flag_FTM3_C6SC_status =  0;
+uint8 flag_FTM3_C7SC_status =  0;
+
+uint8 flag_FTM4_C0SC_status = 0;
+uint8 flag_FTM4_C1SC_status =  0;
+uint8 flag_FTM4_C2SC_status =  0;
+uint8 flag_FTM4_C3SC_status =  0;
+uint8 flag_FTM4_C4SC_status =  0;
+uint8 flag_FTM4_C5SC_status =  0;
+uint8 flag_FTM4_C6SC_status =  0;
+uint8 flag_FTM4_C7SC_status =  0;
+
+/**VARIABLE COUNTERS*/
+
+uint8 FTM0_C0SC_counter = 0;
+uint8 FTM0_C1SC_counter =  0;
+uint8 FTM0_C2SC_counter =  0;
+uint8 FTM0_C3SC_counter =  0;
+uint8 FTM0_C4SC_counter =  0;
+uint8 FTM0_C5SC_counter =  0;
+uint8 FTM0_C6SC_counter =  0;
+uint8 FTM0_C7SC_counter =  0;
+
+uint8 FTM2_C0SC_counter = 0;
+uint8 FTM2_C1SC_counter =  0;
+
+uint8 FTM3_C0SC_counter = 0;
+uint8 FTM3_C1SC_counter =  0;
+uint8 FTM3_C2SC_counter =  0;
+uint8 FTM3_C3SC_counter =  0;
+uint8 FTM3_C4SC_counter =  0;
+uint8 FTM3_C5SC_counter =  0;
+uint8 FTM3_C6SC_counter =  0;
+uint8 FTM3_C7SC_counter =  0;
+
+uint8 FTM4_C0SC_counter = 0;
+uint8 FTM4_C1SC_counter =  0;
+uint8 FTM4_C2SC_counter =  0;
+uint8 FTM4_C3SC_counter =  0;
+uint8 FTM4_C4SC_counter =  0;
+uint8 FTM4_C5SC_counter =  0;
+uint8 FTM4_C6SC_counter =  0;
+uint8 FTM4_C7SC_counter =  0;
+
 
  void freq_per(){
 	 	 	 if(cntTimerValue>cntTimerValue2){
@@ -57,29 +120,171 @@ volatile uint8 flag = 0;
  			frequency=(1.0/period);
 
  }
-
+//no se necesita
 void FTM0_IRQHandler(){
 
 	FTM0_C0SC &= ~FLEX_TIMER_CHF;
 
-	if (PRIMER_VALOR == flag){
-		cntTimerValue = (float)FTM0_C0V;
-		flag++;
-	} else if (SEGUNDO_VALOR == flag) {
-		cntTimerValue2 = (float)FTM0_C0V;
+	flag_FTM0_C0SC_status = FLEX_TIMER_CHF & FTM0_C0SC;
+	flag_FTM0_C1SC_status = FLEX_TIMER_CHF & FTM0_C1SC;
+	flag_FTM0_C2SC_status = FLEX_TIMER_CHF & FTM0_C2SC;
+	flag_FTM0_C3SC_status = FLEX_TIMER_CHF & FTM0_C3SC;
+	flag_FTM0_C4SC_status = FLEX_TIMER_CHF & FTM0_C4SC;
+	flag_FTM0_C5SC_status = FLEX_TIMER_CHF & FTM0_C5SC;
+	flag_FTM0_C6SC_status = FLEX_TIMER_CHF & FTM0_C6SC;
+	flag_FTM0_C7SC_status = FLEX_TIMER_CHF & FTM0_C7SC;
 
-		freq_per();
 
-		flag = 0;
+	if ( TRUE = flag_FTM0_C0SC_status){
+		FTM0_C0SC_counter++;
 	}
+
+	if ( TRUE = flag_FTM0_C1SC_status){
+		FTM0_C1SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C2SC_status){
+		FTM0_C2SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C3SC_status){
+		FTM0_C3SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C4SC_status){
+		FTM0_C4SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C5SC_status){
+		FTM0_C5SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C6SC_status){
+		FTM0_C6SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C7SC_status){
+		FTM0_C7SC_counter++;
+	}
+
+
+//	if (PRIMER_VALOR == flag){
+//		cntTimerValue = (float)FTM0_C0V;
+//		flag++;
+//	} else if (SEGUNDO_VALOR == flag) {
+//		cntTimerValue2 = (float)FTM0_C0V;
+//
+//		freq_per();
+//
+//		flag = 0;
+//	}
 
 }
 
 void FTM2_IRQHandler(){
 	FTM2_SC &= ~FLEX_TIMER_TOF;
-	GPIO_tooglePIN(GPIOB,BIT18);
+	//GPIO_tooglePIN(GPIOB,BIT18);
+
+	flag_FTM2_C0SC_status = FLEX_TIMER_CHF & FTM2_C0SC;
+	flag_FTM2_C1SC_status = FLEX_TIMER_CHF & FTM2_C1SC;
+
+
+
 }
 
+
+void FTM3_IRQHandler(){
+	FTM3_SC &= ~FLEX_TIMER_TOF;
+	//GPIO_tooglePIN(GPIOB,BIT18);
+
+	flag_FTM3_C0SC_status = FLEX_TIMER_CHF & FTM3_C0SC;
+	flag_FTM3_C1SC_status = FLEX_TIMER_CHF & FTM3_C1SC;
+	flag_FTM3_C2SC_status = FLEX_TIMER_CHF & FTM3_C2SC;
+	flag_FTM3_C3SC_status = FLEX_TIMER_CHF & FTM3_C3SC;
+	flag_FTM3_C4SC_status = FLEX_TIMER_CHF & FTM3_C4SC;
+	flag_FTM3_C5SC_status = FLEX_TIMER_CHF & FTM3_C5SC;
+	flag_FTM3_C6SC_status = FLEX_TIMER_CHF & FTM3_C6SC;
+	flag_FTM3_C7SC_status = FLEX_TIMER_CHF & FTM3_C7SC;
+
+	if ( TRUE = flag_FTM0_C0SC_status){
+		FTM0_C0SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C1SC_status){
+		FTM0_C1SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C2SC_status){
+		FTM0_C2SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C3SC_status){
+		FTM0_C3SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C4SC_status){
+		FTM0_C4SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C5SC_status){
+		FTM0_C5SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C6SC_status){
+		FTM0_C6SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM0_C7SC_status){
+		FTM4_C7SC_counter++;
+	}
+}
+
+
+void FTM4_IRQHandler(){
+	FTM4_SC &= ~FLEX_TIMER_TOF;
+	//GPIO_tooglePIN(GPIOB,BIT18);
+
+	flag_FTM4_C0SC_status = FLEX_TIMER_CHF & FTM4_C0SC;
+	flag_FTM4_C1SC_status = FLEX_TIMER_CHF & FTM4_C1SC;
+	flag_FTM4_C2SC_status = FLEX_TIMER_CHF & FTM4_C2SC;
+	flag_FTM4_C3SC_status = FLEX_TIMER_CHF & FTM4_C3SC;
+	flag_FTM4_C4SC_status = FLEX_TIMER_CHF & FTM4_C4SC;
+	flag_FTM4_C5SC_status = FLEX_TIMER_CHF & FTM4_C5SC;
+	flag_FTM4_C6SC_status = FLEX_TIMER_CHF & FTM4_C6SC;
+	flag_FTM4_C7SC_status = FLEX_TIMER_CHF & FTM4_C7SC;
+
+	if ( TRUE = flag_FTM4_C0SC_status){
+		FTM4_C0SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM4_C1SC_status){
+		FTM4_C1SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM4_C2SC_status){
+		FTM4_C2SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM4_C3SC_status){
+		FTM4_C3SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM4_C4SC_status){
+		FTM4_C4SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM4_C5SC_status){
+		FTM4_C5SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM4_C6SC_status){
+		FTM4_C6SC_counter++;
+	}
+
+	if ( TRUE = flag_FTM4_C7SC_status){
+		FTM4_C7SC_counter++;
+	}
+}
 
 void FTM_ClockGating(FTMType FTM){
 	switch(FTM){
