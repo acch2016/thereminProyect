@@ -11,7 +11,7 @@
 
 
 #define FTM_FQ 30000000.0
-
+#define CIEN_PUNTOS 100
 #include "FlexTimer.h"
 
 //uint8 hola = FALSE;
@@ -135,37 +135,77 @@ void FTM0_IRQHandler(){
 	flag_FTM0_C7SC_status = FLEX_TIMER_CHF & FTM0_C7SC;
 
 
-	if ( TRUE = flag_FTM0_C0SC_status){
+
+	if ( TRUE = flag_FTM0_C0SC_status && CIEN_PUNTOS >= FTM0_C0SC_counter ){
 		FTM0_C0SC_counter++;
+		flag_FTM0_C0SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C0SC_counter ){
+			FTM0_C0SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C1SC_status){
+	else if ( TRUE = flag_FTM0_C1SC_status && CIEN_PUNTOS >= FTM0_C1SC_counter ){
 		FTM0_C1SC_counter++;
+		flag_FTM0_C1SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C1SC_counter ){
+			FTM0_C1SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C2SC_status){
+
+	else if ( TRUE = flag_FTM0_C2SC_status && CIEN_PUNTOS >= FTM0_C2SC_counter ){
 		FTM0_C2SC_counter++;
+		flag_FTM0_C2SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C2SC_counter ){
+			FTM0_C2SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C3SC_status){
+
+	else if ( TRUE = flag_FTM0_C3SC_status && CIEN_PUNTOS >= FTM0_C3SC_counter ){
 		FTM0_C3SC_counter++;
+		flag_FTM0_C3SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C3SC_counter ){
+			FTM0_C3SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C4SC_status){
+
+	else if ( TRUE = flag_FTM0_C4SC_status && CIEN_PUNTOS >= FTM0_C4SC_counter ){
 		FTM0_C4SC_counter++;
+		flag_FTM0_C4SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C4SC_counter ){
+			FTM0_C4SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C5SC_status){
+
+	else if ( TRUE = flag_FTM0_C5SC_status && CIEN_PUNTOS >= FTM0_C5SC_counter ){
 		FTM0_C5SC_counter++;
+		flag_FTM0_C5SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C5SC_counter ){
+			FTM0_C5SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C6SC_status){
+
+	else if ( TRUE = flag_FTM0_C6SC_status && CIEN_PUNTOS >= FTM0_C6SC_counter ){
 		FTM0_C6SC_counter++;
+		flag_FTM0_C6SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C6SC_counter ){
+			FTM0_C6SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C7SC_status){
+
+	else if ( TRUE = flag_FTM0_C7SC_status && CIEN_PUNTOS >= FTM0_C7SC_counter ){
 		FTM0_C7SC_counter++;
+		flag_FTM0_C7SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM0_C7SC_counter ){
+			FTM0_C7SC_counter=FALSE;
+		}
 	}
+
 
 
 //	if (PRIMER_VALOR == flag){
@@ -189,6 +229,23 @@ void FTM2_IRQHandler(){
 	flag_FTM2_C1SC_status = FLEX_TIMER_CHF & FTM2_C1SC;
 
 
+	if ( TRUE = flag_FTM2_C0SC_status && CIEN_PUNTOS >= FTM2_C0SC_counter ){
+		FTM2_C0SC_counter++;
+		flag_FTM2_C0SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM2_C0SC_counter ){
+			FTM2_C0SC_counter=FALSE;
+		}
+	}
+
+	else if ( TRUE = flag_FTM2_C1SC_status && CIEN_PUNTOS >= FTM2_C1SC_counter ){
+		FTM2_C1SC_counter++;
+		flag_FTM2_C1SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM2_C1SC_counter ){
+			FTM2_C1SC_counter=FALSE;
+		}
+	}
+
+
 
 }
 
@@ -206,38 +263,79 @@ void FTM3_IRQHandler(){
 	flag_FTM3_C6SC_status = FLEX_TIMER_CHF & FTM3_C6SC;
 	flag_FTM3_C7SC_status = FLEX_TIMER_CHF & FTM3_C7SC;
 
-	if ( TRUE = flag_FTM0_C0SC_status){
-		FTM0_C0SC_counter++;
+
+
+	if ( TRUE = flag_FTM3_C0SC_status && CIEN_PUNTOS >= FTM3_C0SC_counter ){
+		FTM3_C0SC_counter++;
+		flag_FTM3_C0SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C0SC_counter ){
+			FTM3_C0SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C1SC_status){
-		FTM0_C1SC_counter++;
+	else if ( TRUE = flag_FTM3_C1SC_status && CIEN_PUNTOS >= FTM3_C1SC_counter ){
+		FTM3_C1SC_counter++;
+		flag_FTM3_C1SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C1SC_counter ){
+			FTM3_C1SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C2SC_status){
-		FTM0_C2SC_counter++;
+
+	else if ( TRUE = flag_FTM3_C2SC_status && CIEN_PUNTOS >= FTM3_C2SC_counter ){
+		FTM3_C2SC_counter++;
+		flag_FTM3_C2SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C2SC_counter ){
+			FTM3_C2SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C3SC_status){
-		FTM0_C3SC_counter++;
+
+	else if ( TRUE = flag_FTM3_C3SC_status && CIEN_PUNTOS >= FTM3_C3SC_counter ){
+		FTM3_C3SC_counter++;
+		flag_FTM3_C3SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C3SC_counter ){
+			FTM3_C3SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C4SC_status){
-		FTM0_C4SC_counter++;
+
+	else if ( TRUE = flag_FTM3_C4SC_status && CIEN_PUNTOS >= FTM3_C4SC_counter ){
+		FTM3_C4SC_counter++;
+		flag_FTM3_C4SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C4SC_counter ){
+			FTM3_C4SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C5SC_status){
-		FTM0_C5SC_counter++;
+
+	else if ( TRUE = flag_FTM3_C5SC_status && CIEN_PUNTOS >= FTM3_C5SC_counter ){
+		FTM3_C5SC_counter++;
+		flag_FTM3_C5SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C5SC_counter ){
+			FTM3_C5SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C6SC_status){
-		FTM0_C6SC_counter++;
+
+	else if ( TRUE = flag_FTM3_C6SC_status && CIEN_PUNTOS >= FTM3_C6SC_counter ){
+		FTM3_C6SC_counter++;
+		flag_FTM3_C6SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C6SC_counter ){
+			FTM3_C6SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM0_C7SC_status){
-		FTM4_C7SC_counter++;
+
+	else if ( TRUE = flag_FTM3_C7SC_status && CIEN_PUNTOS >= FTM3_C7SC_counter ){
+		FTM3_C7SC_counter++;
+		flag_FTM3_C7SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM3_C7SC_counter ){
+			FTM3_C7SC_counter=FALSE;
+		}
 	}
-}
+
+
 
 
 void FTM4_IRQHandler(){
@@ -253,37 +351,79 @@ void FTM4_IRQHandler(){
 	flag_FTM4_C6SC_status = FLEX_TIMER_CHF & FTM4_C6SC;
 	flag_FTM4_C7SC_status = FLEX_TIMER_CHF & FTM4_C7SC;
 
-	if ( TRUE = flag_FTM4_C0SC_status){
+
+
+	if ( TRUE = flag_FTM4_C0SC_status && CIEN_PUNTOS >= FTM4_C0SC_counter ){
 		FTM4_C0SC_counter++;
+		flag_FTM4_C0SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C0SC_counter ){
+			FTM4_C0SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM4_C1SC_status){
+	else if ( TRUE = flag_FTM4_C1SC_status && CIEN_PUNTOS >= FTM4_C1SC_counter ){
 		FTM4_C1SC_counter++;
+		flag_FTM4_C1SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C1SC_counter ){
+			FTM4_C1SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM4_C2SC_status){
+
+	else if ( TRUE = flag_FTM4_C2SC_status && CIEN_PUNTOS >= FTM4_C2SC_counter ){
 		FTM4_C2SC_counter++;
+		flag_FTM4_C2SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C2SC_counter ){
+			FTM4_C2SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM4_C3SC_status){
+
+	else if ( TRUE = flag_FTM4_C3SC_status && CIEN_PUNTOS >= FTM4_C3SC_counter ){
 		FTM4_C3SC_counter++;
+		flag_FTM4_C3SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C3SC_counter ){
+			FTM4_C3SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM4_C4SC_status){
+
+	else if ( TRUE = flag_FTM4_C4SC_status && CIEN_PUNTOS >= FTM4_C4SC_counter ){
 		FTM4_C4SC_counter++;
+		flag_FTM4_C4SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C4SC_counter ){
+			FTM4_C4SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM4_C5SC_status){
+
+	else if ( TRUE = flag_FTM4_C5SC_status && CIEN_PUNTOS >= FTM4_C5SC_counter ){
 		FTM4_C5SC_counter++;
+		flag_FTM4_C5SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C5SC_counter ){
+			FTM4_C5SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM4_C6SC_status){
+
+	else if ( TRUE = flag_FTM4_C6SC_status && CIEN_PUNTOS >= FTM4_C6SC_counter ){
 		FTM4_C6SC_counter++;
+		flag_FTM4_C6SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C6SC_counter ){
+			FTM4_C6SC_counter=FALSE;
+		}
 	}
 
-	if ( TRUE = flag_FTM4_C7SC_status){
+
+	else if ( TRUE = flag_FTM4_C7SC_status && CIEN_PUNTOS >= FTM4_C7SC_counter ){
 		FTM4_C7SC_counter++;
+		flag_FTM4_C7SC_status = FALSE;
+		if ( CIEN_PUNTOS == FTM4_C7SC_counter ){
+			FTM4_C7SC_counter=FALSE;
+		}
 	}
+
+
 }
 
 void FTM_ClockGating(FTMType FTM){
