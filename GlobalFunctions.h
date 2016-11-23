@@ -15,4 +15,7 @@ uint8 BCDtoBinary(uint8* character, uint8 numChar);
 uint8 BinarytoHex(uint8 character[],uint8 numChar);
 void CleanArray(uint8 array[], uint8 longd);
 uint8 HextoBinary(uint8 character);
+
+uint8 mcm(uint8 freq1, uint8 freq2);//nueva
+
 #endif /* GLOBALFUNCTIONS_H_ */

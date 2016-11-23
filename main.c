@@ -32,6 +32,7 @@
 #include "MCG.h"
 #include "FlexTimer.h"
 #include "stdio.h"
+#include "NVIC.h"
 
 #define CLK_FREQ_HZ 50000000  /* CLKIN0 frequency */
 #define SLOW_IRC_FREQ 32768	/*This is the approximate value for the slow irc*/
@@ -64,15 +65,61 @@ int main(void)
 	printf("Clock Rate =  %d MHz\n",mcg_clk_hz);
 #endif
 	/* Write your code here */
+	const FTM_ConfigType FTM0_Config={	FTM_0,
+			Channel0,
+			FLEX_TIMER_0_CLOCK_GATING,
+			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
+			FLEX_TIMER_WPDIS,
+			0x0320,//3k750
+			FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK,
+			FTM_CONF_BDMMODE(3),
+			FALSE};
+
 	const FTM_ConfigType FTM1_Config={	FTM_1,
 			Channel0,
 			FLEX_TIMER_1_CLOCK_GATING,
 			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
 			FLEX_TIMER_WPDIS,
-			0x02A9,
+			0x0,
 			FALSE,
 			FALSE,
 			FALSE};
+
+	const FTM_ConfigType FTM2_Config={	FTM_2,
+			Channel0,
+			FLEX_TIMER_2_CLOCK_GATING,
+			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
+			FLEX_TIMER_WPDIS,
+			0x02A9,
+			FLEX_TIMER_MSA | FLEX_TIMER_ELSA,
+			FTM_CONF_BDMMODE(3),
+			FALSE};
+
+	const FTM_ConfigType FTM3_Config={	FTM_3,
+			Channel0,
+			FLEX_TIMER_3_CLOCK_GATING,
+			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
+			FLEX_TIMER_WPDIS,
+			0x0,
+			FALSE,
+			FALSE,
+			FALSE};
+
+	////////////////////////////////////////////DAC
+	SIM_SCGC2  |= SIM_SCGC2_DAC0_MASK;//clock gating del DAC0
+	DAC0_C0 |= DAC_C0_DACEN_MASK;//pin DAC enable
+	DAC0_C0 |= DAC_C0_DACRFS_MASK;//pin DAC reference Select
+	////////////////////////////////////////////DAC
+
+	FTM_Init(&FTM0_Config);
+	FTM_Init(&FTM2_Config);
+	/**Initialization of FlexTimer in output compare mode*/
+
+	NVIC_enableInterruptAndPriotity(FTM0_IRQ,PRIORITY_9);
+	NVIC_enableInterruptAndPriotity(FTM2_IRQ,PRIORITY_8);
+
+	EnableInterrupts;/** Enabling Global interrupts with PRIMASK bit*/
+
 	/* This for loop should be replaced. By default this loop allows a single stepping. */
 
 	for (;;) {

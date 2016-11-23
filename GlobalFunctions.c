@@ -47,3 +47,12 @@ uint8 HextoBinary(uint8 character){
 
 	return result;
 }
+
+//uint8 mcm(uint16 freqMay, uint16 freqmenor){
+////falta definir cual es la freq mayor
+//	cociente = (freqMay/freqmenor);
+//
+//	freqMay / ((freqMay/freqmenor)-cociente);
+//
+//}
+

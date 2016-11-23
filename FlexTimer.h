@@ -15,6 +15,7 @@
 #define FLEX_TIMER_0_CLOCK_GATING 0x01000000
 #define FLEX_TIMER_1_CLOCK_GATING 0x02000000
 #define FLEX_TIMER_2_CLOCK_GATING 0x04000000
+#define FLEX_TIMER_3_CLOCK_GATING 0x02000000
 
 #define FLEX_TIMER_FAULTIE  0x80
 #define FLEX_TIMER_FAULTM_0   0x00
@@ -65,6 +66,7 @@
 typedef enum{FTM_0,
 			 FTM_1,
 			 FTM_2,
+			 FTM_3,
 }FTMType;
 
 typedef enum{Channel0,
@@ -125,6 +127,8 @@ float frecuency_value();
 
 float temp_value();
 void clean_frecuency();
+
+//uint8 adding_sines();
 
 
 #endif /* FLEXTIMER_H_ */

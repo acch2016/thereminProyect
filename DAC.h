@@ -12,6 +12,8 @@
 #include "DataTypeDefinitions.h"
 #include "MK64F12.h"
 
+
+void sin(uint8 FTM0_C0SC_counter);
 /********************************************************************************************/
 /********************************************************************************************/
 /********************************************************************************************/
@@ -50,6 +52,8 @@ void square();
  	 \brief	Función que carga datos al DAC de la K64
  	 \return void
  */
-void writeDAC(uint8 valor);
+void writeDAC(sint8 valor);
+sint16 adding_sines(sint8 ftm0ch0, sint8 ftm0ch1, sint8 ftm0ch2, sint8 ftm0ch3, sint8 ftm0ch4, sint8 ftm0ch5, sint8 ftm0ch6, sint8 ftm0ch7,sint8 ftm3ch0, sint8 ftm3ch1, sint8 ftm3ch2, sint8 ftm3ch3, sint8 ftm3ch4, sint8 ftm3ch5, sint8 ftm3ch6, sint8 ftm3ch7);
+//
 
 #endif /* SOURCES_DAC_H_ */

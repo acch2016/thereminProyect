@@ -13,6 +13,7 @@
 #define FTM_FQ 30000000.0
 #define CIEN_PUNTOS 100
 #include "FlexTimer.h"
+#include "DAC.h"
 
 //uint8 hola = FALSE;
 
@@ -56,8 +57,8 @@ uint8 flag_FTM0_C5SC_status =  0;
 uint8 flag_FTM0_C6SC_status =  0;
 uint8 flag_FTM0_C7SC_status =  0;
 
-uint8 flag_FTM2_C0SC_status = 0;
-uint8 flag_FTM2_C1SC_status =  0;
+//uint8 flag_FTM2_C0SC_status = 0;
+//uint8 flag_FTM2_C1SC_status =  0;
 
 uint8 flag_FTM3_C0SC_status = 0;
 uint8 flag_FTM3_C1SC_status =  0;
@@ -88,8 +89,8 @@ uint8 FTM0_C5SC_counter =  0;
 uint8 FTM0_C6SC_counter =  0;
 uint8 FTM0_C7SC_counter =  0;
 
-uint8 FTM2_C0SC_counter = 0;
-uint8 FTM2_C1SC_counter =  0;
+//uint8 FTM2_C0SC_counter = 0;
+//uint8 FTM2_C1SC_counter =  0;
 
 uint8 FTM3_C0SC_counter = 0;
 uint8 FTM3_C1SC_counter =  0;
@@ -225,26 +226,27 @@ void FTM2_IRQHandler(){
 	FTM2_SC &= ~FLEX_TIMER_TOF;
 	//GPIO_tooglePIN(GPIOB,BIT18);
 
-	flag_FTM2_C0SC_status = FLEX_TIMER_CHF & FTM2_C0SC;
-	flag_FTM2_C1SC_status = FLEX_TIMER_CHF & FTM2_C1SC;
+//	flag_FTM2_C0SC_status = FLEX_TIMER_CHF & FTM2_C0SC;
+//	flag_FTM2_C1SC_status = FLEX_TIMER_CHF & FTM2_C1SC;
+//
+//
+//	if ( TRUE == flag_FTM2_C0SC_status && CIEN_PUNTOS >= FTM2_C0SC_counter ){
+//		FTM2_C0SC_counter++;
+//		flag_FTM2_C0SC_status = FALSE;
+//		if ( CIEN_PUNTOS == FTM2_C0SC_counter ){
+//			FTM2_C0SC_counter=FALSE;
+//		}
+//	}
+//
+//	else if ( TRUE == flag_FTM2_C1SC_status && CIEN_PUNTOS >= FTM2_C1SC_counter ){
+//		FTM2_C1SC_counter++;
+//		flag_FTM2_C1SC_status = FALSE;
+//		if ( CIEN_PUNTOS == FTM2_C1SC_counter ){
+//			FTM2_C1SC_counter=FALSE;
+//		}
+//	}
 
-
-	if ( TRUE == flag_FTM2_C0SC_status && CIEN_PUNTOS >= FTM2_C0SC_counter ){
-		FTM2_C0SC_counter++;
-		flag_FTM2_C0SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM2_C0SC_counter ){
-			FTM2_C0SC_counter=FALSE;
-		}
-	}
-
-	else if ( TRUE == flag_FTM2_C1SC_status && CIEN_PUNTOS >= FTM2_C1SC_counter ){
-		FTM2_C1SC_counter++;
-		flag_FTM2_C1SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM2_C1SC_counter ){
-			FTM2_C1SC_counter=FALSE;
-		}
-	}
-
+sin(FTM0_C0SC_counter);
 
 
 }
@@ -336,7 +338,7 @@ void FTM3_IRQHandler(){
 	}
 
 
-
+}
 
 
 void FTM_ClockGating(FTMType FTM){
@@ -349,6 +351,9 @@ void FTM_ClockGating(FTMType FTM){
 		break;
 	case FTM_2:
 		SIM_SCGC6 |= FLEX_TIMER_2_CLOCK_GATING;
+		break;
+	case FTM_3:
+		SIM_SCGC3 |= FLEX_TIMER_3_CLOCK_GATING;
 		break;
 	}
 }
@@ -407,16 +412,13 @@ void FTM_Init(const FTM_ConfigType * FTM_Config)
 	FTM_CONF(FTM_Config->FTM, FTM_Config->FTM_CONF_Mask);
 }
 
-float frecuency_value(){
-	return frequency;
-}
+//float frecuency_value(){
+//	return frequency;
+//}
 
-float temp_value(){
 
-	return tempValue;
-}
+//void clean_frecuency(){
+//	frequency = 0;
+//}
 
-void clean_frecuency(){
-	frequency = 0;
-}
 
