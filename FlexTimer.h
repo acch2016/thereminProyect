@@ -105,6 +105,8 @@ void FTM_Init();
 
 float frecuency_value();
 
+void FTM_CnV(FTMType FTM, FTMChannelType channel, uint32 mask);
+
 void FTM_ClockGating(FTMType FTM);
 
 void FTM_Stat_Control(FTMType FTM, uint32 mask,FTMState g);

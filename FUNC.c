@@ -89,7 +89,7 @@ void sine_2()		/**Función para prender los leds del estado y mandar
 	GPIO_clearPIN(GPIOE, SIGNAL_LED_1);		/** Encender LED 1 (PTE24)*/
 	GPIO_setPIN(GPIOE, SIGNAL_LED_2);		/** Apagar LED 2 (PTE25)*/
 
-	sine();									/**Llamar a la función para cargar el valor de la señal senoidal*/
+	//sine();									/**Llamar a la función para cargar el valor de la señal senoidal*/
 }
 
 void triangle_3()	/**Función para prender los leds del estado y mandar

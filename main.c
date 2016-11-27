@@ -68,9 +68,9 @@ int main(void)
 	const FTM_ConfigType FTM0_Config={	FTM_0,
 			Channel0,
 			FLEX_TIMER_0_CLOCK_GATING,
-			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
+			FLEX_TIMER_TOIE|FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
 			FLEX_TIMER_WPDIS,
-			0x0320,//3k750
+			0x096,//3k750 -//300Hz
 			FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK,
 			FTM_CONF_BDMMODE(3),
 			FALSE};
@@ -90,7 +90,7 @@ int main(void)
 			FLEX_TIMER_2_CLOCK_GATING,
 			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
 			FLEX_TIMER_WPDIS,
-			0x02A9,
+			0x02A9,//44k
 			FLEX_TIMER_MSA | FLEX_TIMER_ELSA,
 			FTM_CONF_BDMMODE(3),
 			FALSE};
@@ -105,6 +105,17 @@ int main(void)
 			FALSE,
 			FALSE};
 
+
+	//FTM_CnV(FTM_0, Channel0, 0x03E8);
+////
+//
+//	FTM_CnSC(FTMType FTM, FTMChannelType channel, uint32 mask, FTMState state);
+//	FTM_CnV(FTMType FTM, FTMChannelType channel, uint32 mask);
+//
+//
+//	FTM_CnSC(FTMType FTM, FTMChannelType channel, uint32 mask, FTMState state);
+//	FTM_CnV(FTMType FTM, FTMChannelType channel, uint32 mask);
+
 	////////////////////////////////////////////DAC
 	SIM_SCGC2  |= SIM_SCGC2_DAC0_MASK;//clock gating del DAC0
 	DAC0_C0 |= DAC_C0_DACEN_MASK;//pin DAC enable
@@ -113,9 +124,15 @@ int main(void)
 
 	FTM_Init(&FTM0_Config);
 	FTM_Init(&FTM2_Config);
-	/**Initialization of FlexTimer in output compare mode*/
 
-	NVIC_enableInterruptAndPriotity(FTM0_IRQ,PRIORITY_9);
+	FTM_CnSC(FTM_0, Channel1, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
+	FTM_CnV(FTM_0, Channel1, 0x01F4);//500Hz
+	FTM_CnSC(FTM_0, Channel2, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
+	FTM_CnV(FTM_0, Channel2, 0x14D);//333Hz
+
+	/**Initialization of FlexTimer in output compare mode*/
+	NVIC_setBASEPRI_threshold(PRIORITY_10);
+	NVIC_enableInterruptAndPriotity(FTM0_IRQ,PRIORITY_8);
 	NVIC_enableInterruptAndPriotity(FTM2_IRQ,PRIORITY_8);
 
 	EnableInterrupts;/** Enabling Global interrupts with PRIMASK bit*/
@@ -124,7 +141,7 @@ int main(void)
 
 	for (;;) {
 
-	}
+}
 	/* Never leave main */
 	return 0;
 }

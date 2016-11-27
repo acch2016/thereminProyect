@@ -11,7 +11,7 @@
 
 
 #define FTM_FQ 30000000.0
-#define CIEN_PUNTOS 100
+#define CIEN_PUNTOS 148
 #include "FlexTimer.h"
 #include "DAC.h"
 
@@ -46,6 +46,9 @@ volatile uint8 flag = 0;
  float period = 0.0f;
  float  frequency = 0.0f;
  float tempValue = 0.0f;
+
+ uint16 MOD = 0x014D;
+ uint16 multiplier = 1;
 
 /**STATUS FLAG*/
 uint8 flag_FTM0_C0SC_status = 0;
@@ -124,40 +127,47 @@ uint8 FTM4_C7SC_counter =  0;
 //no se necesita
 void FTM0_IRQHandler(){
 
+	FTM0_SC &=~(FLEX_TIMER_TOF);
+	flag_FTM0_C0SC_status = (FLEX_TIMER_CHF & FTM0_C0SC)>>7;
+	flag_FTM0_C1SC_status = (FLEX_TIMER_CHF & FTM0_C1SC)>>7;
+	flag_FTM0_C2SC_status = (FLEX_TIMER_CHF & FTM0_C2SC)>>7;
+	flag_FTM0_C3SC_status = (FLEX_TIMER_CHF & FTM0_C3SC)>>7;
+	flag_FTM0_C4SC_status = (FLEX_TIMER_CHF & FTM0_C4SC)>>7;
+	flag_FTM0_C5SC_status = (FLEX_TIMER_CHF & FTM0_C5SC)>>7;
+	flag_FTM0_C6SC_status = (FLEX_TIMER_CHF & FTM0_C6SC)>>7;
+	flag_FTM0_C7SC_status = (FLEX_TIMER_CHF & FTM0_C7SC)>>7;
+
 	FTM0_C0SC &= ~FLEX_TIMER_CHF;
-
-	flag_FTM0_C0SC_status = FLEX_TIMER_CHF & FTM0_C0SC;
-	flag_FTM0_C1SC_status = FLEX_TIMER_CHF & FTM0_C1SC;
-	flag_FTM0_C2SC_status = FLEX_TIMER_CHF & FTM0_C2SC;
-	flag_FTM0_C3SC_status = FLEX_TIMER_CHF & FTM0_C3SC;
-	flag_FTM0_C4SC_status = FLEX_TIMER_CHF & FTM0_C4SC;
-	flag_FTM0_C5SC_status = FLEX_TIMER_CHF & FTM0_C5SC;
-	flag_FTM0_C6SC_status = FLEX_TIMER_CHF & FTM0_C6SC;
-	flag_FTM0_C7SC_status = FLEX_TIMER_CHF & FTM0_C7SC;
+	FTM0_C1SC &= ~FLEX_TIMER_CHF;
+	FTM0_C2SC &= ~FLEX_TIMER_CHF;
 
 
-
-	if ( TRUE == flag_FTM0_C0SC_status && CIEN_PUNTOS >= FTM0_C0SC_counter ){
+	if ( TRUE == flag_FTM0_C0SC_status){
 		FTM0_C0SC_counter++;
+		FTM0_C0SC_counter++;
+		FTM0_C0SC_counter++;
+	//	FTM0_C1SC_counter++;
+		//FTM0_C2SC_counter++;
 		flag_FTM0_C0SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C0SC_counter ){
+		if ( CIEN_PUNTOS < FTM0_C0SC_counter ){
 			FTM0_C0SC_counter=FALSE;
 		}
 	}
 
-	else if ( TRUE == flag_FTM0_C1SC_status && CIEN_PUNTOS >= FTM0_C1SC_counter ){
+	else if (TRUE == flag_FTM0_C1SC_status){
 		FTM0_C1SC_counter++;
 		flag_FTM0_C1SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C1SC_counter ){
+		if ( CIEN_PUNTOS < FTM0_C1SC_counter ){
 			FTM0_C1SC_counter=FALSE;
 		}
 	}
 
 
-	else if ( TRUE == flag_FTM0_C2SC_status && CIEN_PUNTOS >= FTM0_C2SC_counter ){
+	else if ( TRUE == flag_FTM0_C2SC_status){
 		FTM0_C2SC_counter++;
+//		FTM_CnV(FTM_0, Channel2, MOD * 2);
 		flag_FTM0_C2SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C2SC_counter ){
+		if ( CIEN_PUNTOS < FTM0_C2SC_counter ){
 			FTM0_C2SC_counter=FALSE;
 		}
 	}
@@ -246,8 +256,7 @@ void FTM2_IRQHandler(){
 //		}
 //	}
 
-sin(FTM0_C0SC_counter);
-
+sine(FTM0_C0SC_counter,FTM0_C1SC_counter,FTM0_C2SC_counter);
 
 }
 
@@ -386,6 +395,12 @@ void FTM_CnSC(FTMType FTM, FTMChannelType channel, uint32 mask, FTMState state){
 	*FTMx_CnSC[FTM][channel] &= mask;
 	}
 }
+
+void FTM_CnV(FTMType FTM, FTMChannelType channel, uint32 mask){
+	*FTMx_CnV[FTM][channel] = mask;
+
+}
+
 
 void FTM_CONF(FTMType FTM, uint32 mask){
 	*FTMx_CONF[FTM] |= mask;

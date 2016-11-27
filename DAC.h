@@ -13,7 +13,8 @@
 #include "MK64F12.h"
 
 
-void sin(uint8 FTM0_C0SC_counter);
+void sine(uint8 FTM0_C0SC_counter, uint8 FTM0_C1SC_counter, uint8 FTM0_C2SC_counter);
+//void sin(sint8 FTM0_C0SC_counter);
 /********************************************************************************************/
 /********************************************************************************************/
 /********************************************************************************************/
@@ -22,7 +23,7 @@ void sin(uint8 FTM0_C0SC_counter);
  	 	 	 de la K64
  	 \return void
  */
-void sine();
+//void sine();
 
 /********************************************************************************************/
 /********************************************************************************************/
@@ -52,7 +53,7 @@ void square();
  	 \brief	Función que carga datos al DAC de la K64
  	 \return void
  */
-void writeDAC(sint8 valor);
+void writeDAC(uint16 valor);
 sint16 adding_sines(sint8 ftm0ch0, sint8 ftm0ch1, sint8 ftm0ch2, sint8 ftm0ch3, sint8 ftm0ch4, sint8 ftm0ch5, sint8 ftm0ch6, sint8 ftm0ch7,sint8 ftm3ch0, sint8 ftm3ch1, sint8 ftm3ch2, sint8 ftm3ch3, sint8 ftm3ch4, sint8 ftm3ch5, sint8 ftm3ch6, sint8 ftm3ch7);
 //
 
