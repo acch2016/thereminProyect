@@ -70,22 +70,13 @@ int main(void)
 			FLEX_TIMER_0_CLOCK_GATING,
 			FLEX_TIMER_TOIE|FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
 			FLEX_TIMER_WPDIS,
-			0x096,//3k750 -//300Hz
+			0x096,//100
 			FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK,
 			FTM_CONF_BDMMODE(3),
 			FALSE};
 
-	const FTM_ConfigType FTM1_Config={	FTM_1,
-			Channel0,
-			FLEX_TIMER_1_CLOCK_GATING,
-			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
-			FLEX_TIMER_WPDIS,
-			0x0,
-			FALSE,
-			FALSE,
-			FALSE};
 
-	const FTM_ConfigType FTM2_Config={	FTM_2,
+	const FTM_ConfigType FTM1_Config={	FTM_1,
 			Channel0,
 			FLEX_TIMER_2_CLOCK_GATING,
 			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
@@ -95,45 +86,30 @@ int main(void)
 			FTM_CONF_BDMMODE(3),
 			FALSE};
 
-	const FTM_ConfigType FTM3_Config={	FTM_3,
-			Channel0,
-			FLEX_TIMER_3_CLOCK_GATING,
-			FLEX_TIMER_TOIE | FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
-			FLEX_TIMER_WPDIS,
-			0x0,
-			FALSE,
-			FALSE,
-			FALSE};
 
 
-	//FTM_CnV(FTM_0, Channel0, 0x03E8);
-////
-//
-//	FTM_CnSC(FTMType FTM, FTMChannelType channel, uint32 mask, FTMState state);
-//	FTM_CnV(FTMType FTM, FTMChannelType channel, uint32 mask);
-//
-//
-//	FTM_CnSC(FTMType FTM, FTMChannelType channel, uint32 mask, FTMState state);
-//	FTM_CnV(FTMType FTM, FTMChannelType channel, uint32 mask);
+
+
+
 
 	////////////////////////////////////////////DAC
 	SIM_SCGC2  |= SIM_SCGC2_DAC0_MASK;//clock gating del DAC0
 	DAC0_C0 |= DAC_C0_DACEN_MASK;//pin DAC enable
 	DAC0_C0 |= DAC_C0_DACRFS_MASK;//pin DAC reference Select
 	////////////////////////////////////////////DAC
-
+	freq_per();
 	FTM_Init(&FTM0_Config);
-	FTM_Init(&FTM2_Config);
+	FTM_Init(&FTM1_Config);
 
-	FTM_CnSC(FTM_0, Channel1, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
-	FTM_CnV(FTM_0, Channel1, 0x01F4);//500Hz
-	FTM_CnSC(FTM_0, Channel2, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
-	FTM_CnV(FTM_0, Channel2, 0x14D);//333Hz
+//	FTM_CnSC(FTM_0, Channel1, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
+//	FTM_CnV(FTM_0, Channel1, 0x01F4);//500Hz
+//	FTM_CnSC(FTM_0, Channel2, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
+//	FTM_CnV(FTM_0, Channel2, 0x14D);//333Hz
 
 	/**Initialization of FlexTimer in output compare mode*/
 	NVIC_setBASEPRI_threshold(PRIORITY_10);
 	NVIC_enableInterruptAndPriotity(FTM0_IRQ,PRIORITY_8);
-	NVIC_enableInterruptAndPriotity(FTM2_IRQ,PRIORITY_8);
+	NVIC_enableInterruptAndPriotity(FTM1_IRQ,PRIORITY_8);
 
 	EnableInterrupts;/** Enabling Global interrupts with PRIMASK bit*/
 

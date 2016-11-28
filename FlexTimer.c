@@ -12,10 +12,44 @@
 
 #define FTM_FQ 30000000.0
 #define CIEN_PUNTOS 148
+#define DIEZ_MIL_ARREGLO 10000
 #include "FlexTimer.h"
-#include "DAC.h"
 
-//uint8 hola = FALSE;
+
+uint16 random_freq = 3000;
+uint16 random_freq2 = 700;
+uint16 random_freq3 = 400;
+uint16 random_freq4 = 500;
+uint16 random_freq5 = 140;
+uint16 random_freq6 = 760;
+uint16 random_freq7 = 340;
+uint16 random_freq8 = 200;
+uint16 random_freq9 = 3070;
+uint16 random_freq10 = 709;
+uint16 random_freq11 = 406;
+uint16 random_freq12= 504;
+uint16 random_freq13= 146;
+uint16 random_freq14= 768;
+uint16 random_freq15= 342;
+uint16 random_freq16= 201;
+
+float step = 0;//paso en el cual se recorreran los 10000 valores
+float step2 = 0;
+float step3 = 0;
+float step4 = 0;
+float step5 = 0;
+float step6 = 0;
+float step7 = 0;
+float step8 = 0;
+float step9 = 0;//paso en el cual se recorreran los 10000 valores
+float step10 = 0;
+float step11 = 0;
+float step12 = 0;
+float step13 = 0;
+float step14 = 0;
+float step15 = 0;
+float step16 = 0;
+
 
 volatile uint32* FTMx_SC[4]={&FTM0_SC, &FTM1_SC, &FTM2_SC};
 volatile uint32* FTMx_MODE[4]={&FTM0_MODE, &FTM1_MODE, &FTM2_MODE};
@@ -34,320 +68,181 @@ volatile uint32* FTMx_CnSC[4][8] = {{&FTM0_C0SC,&FTM0_C1SC,&FTM0_C2SC,&FTM0_C3SC
 									{&FTM3_C0SC,&FTM3_C1SC,&FTM3_C2SC,&FTM3_C3SC,&FTM3_C4SC,&FTM3_C5SC,&FTM3_C6SC,&FTM3_C7SC}};
 
 
-typedef enum {
-	PRIMER_VALOR,
-	SEGUNDO_VALOR,
-}ValorDefinitionType;
 
-/** Variable to contain the FTM0 counter value*/
-volatile float cntTimerValue = 0.0f;
-volatile float cntTimerValue2 = 0.0f;
-volatile uint8 flag = 0;
- float period = 0.0f;
- float  frequency = 0.0f;
- float tempValue = 0.0f;
 
- uint16 MOD = 0x014D;
- uint16 multiplier = 1;
 
-/**STATUS FLAG*/
-uint8 flag_FTM0_C0SC_status = 0;
-uint8 flag_FTM0_C1SC_status =  0;
-uint8 flag_FTM0_C2SC_status =  0;
-uint8 flag_FTM0_C3SC_status =  0;
-uint8 flag_FTM0_C4SC_status =  0;
-uint8 flag_FTM0_C5SC_status =  0;
-uint8 flag_FTM0_C6SC_status =  0;
-uint8 flag_FTM0_C7SC_status =  0;
 
-//uint8 flag_FTM2_C0SC_status = 0;
-//uint8 flag_FTM2_C1SC_status =  0;
-
-uint8 flag_FTM3_C0SC_status = 0;
-uint8 flag_FTM3_C1SC_status =  0;
-uint8 flag_FTM3_C2SC_status =  0;
-uint8 flag_FTM3_C3SC_status =  0;
-uint8 flag_FTM3_C4SC_status =  0;
-uint8 flag_FTM3_C5SC_status =  0;
-uint8 flag_FTM3_C6SC_status =  0;
-uint8 flag_FTM3_C7SC_status =  0;
-
-uint8 flag_FTM4_C0SC_status = 0;
-uint8 flag_FTM4_C1SC_status =  0;
-uint8 flag_FTM4_C2SC_status =  0;
-uint8 flag_FTM4_C3SC_status =  0;
-uint8 flag_FTM4_C4SC_status =  0;
-uint8 flag_FTM4_C5SC_status =  0;
-uint8 flag_FTM4_C6SC_status =  0;
-uint8 flag_FTM4_C7SC_status =  0;
 
 /**VARIABLE COUNTERS*/
 
-uint8 FTM0_C0SC_counter = 0;
-uint8 FTM0_C1SC_counter =  0;
-uint8 FTM0_C2SC_counter =  0;
-uint8 FTM0_C3SC_counter =  0;
-uint8 FTM0_C4SC_counter =  0;
-uint8 FTM0_C5SC_counter =  0;
-uint8 FTM0_C6SC_counter =  0;
-uint8 FTM0_C7SC_counter =  0;
+float FTM0_0_counter = 0;
+float FTM0_1_counter =  0;
+float FTM0_2_counter =  0;
+float FTM0_3_counter =  0;
+float FTM0_4_counter =  0;
+float FTM0_5_counter =  0;
+float FTM0_6_counter =  0;
+float FTM0_7_counter =  0;
+float FTM0_8_counter =  0;
+float FTM0_9_counter =  0;
+float FTM0_10_counter =  0;
+float FTM0_11_counter =  0;
+float FTM0_12_counter =  0;
+float FTM0_13_counter =  0;
+float FTM0_14_counter =  0;
+float FTM0_15_counter =  0;
 
-//uint8 FTM2_C0SC_counter = 0;
+//uint8 FTM2_C0_counter = 0;
 //uint8 FTM2_C1SC_counter =  0;
 
-uint8 FTM3_C0SC_counter = 0;
-uint8 FTM3_C1SC_counter =  0;
-uint8 FTM3_C2SC_counter =  0;
-uint8 FTM3_C3SC_counter =  0;
-uint8 FTM3_C4SC_counter =  0;
-uint8 FTM3_C5SC_counter =  0;
-uint8 FTM3_C6SC_counter =  0;
-uint8 FTM3_C7SC_counter =  0;
+float FTM3_C0SC_counter = 0;
+float FTM3_C1SC_counter =  0;
+float FTM3_C2SC_counter =  0;
+float FTM3_C3SC_counter =  0;
+float FTM3_C4SC_counter =  0;
+float FTM3_C5SC_counter =  0;
+float FTM3_C6SC_counter =  0;
+float FTM3_C7SC_counter =  0;
 
-uint8 FTM4_C0SC_counter = 0;
-uint8 FTM4_C1SC_counter =  0;
-uint8 FTM4_C2SC_counter =  0;
-uint8 FTM4_C3SC_counter =  0;
-uint8 FTM4_C4SC_counter =  0;
-uint8 FTM4_C5SC_counter =  0;
-uint8 FTM4_C6SC_counter =  0;
-uint8 FTM4_C7SC_counter =  0;
+float FTM4_C0SC_counter = 0;
+float FTM4_C1SC_counter =  0;
+float FTM4_C2SC_counter =  0;
+float FTM4_C3SC_counter =  0;
+float FTM4_C4SC_counter =  0;
+float FTM4_C5SC_counter =  0;
+float FTM4_C6SC_counter =  0;
+float FTM4_C7SC_counter =  0;
 
 
  void freq_per(){
-	 	 	 if(cntTimerValue>cntTimerValue2){
-	 	 		 period = (65536-cntTimerValue+cntTimerValue2)*(1.0/FTM_FQ);
-	 	 	 }else{
-	      		period=(cntTimerValue2-cntTimerValue)*(1.0/FTM_FQ);
-	 	 	 }
-
- 			frequency=(1.0/period);
+	step=(random_freq/11);
+	step2=(random_freq2/11);
+	step3=(random_freq3/11);
+	step4=(random_freq4/11);
+	step5=(random_freq5/11);
+	step6=(random_freq6/11);
+	step7=(random_freq7/11);
+	step8=(random_freq8/11);
+	step9=(random_freq9/11);
+	step10=(random_freq10/11);
+	step11=(random_freq11/11);
+	step12=(random_freq12/11);
+	step13=(random_freq13/11);
+	step14=(random_freq14/11);
+	step15=(random_freq15/11);
+	step16=(random_freq16/11);
 
  }
-//no se necesita
+
+
+
 void FTM0_IRQHandler(){
 
 	FTM0_SC &=~(FLEX_TIMER_TOF);
-	flag_FTM0_C0SC_status = (FLEX_TIMER_CHF & FTM0_C0SC)>>7;
-	flag_FTM0_C1SC_status = (FLEX_TIMER_CHF & FTM0_C1SC)>>7;
-	flag_FTM0_C2SC_status = (FLEX_TIMER_CHF & FTM0_C2SC)>>7;
-	flag_FTM0_C3SC_status = (FLEX_TIMER_CHF & FTM0_C3SC)>>7;
-	flag_FTM0_C4SC_status = (FLEX_TIMER_CHF & FTM0_C4SC)>>7;
-	flag_FTM0_C5SC_status = (FLEX_TIMER_CHF & FTM0_C5SC)>>7;
-	flag_FTM0_C6SC_status = (FLEX_TIMER_CHF & FTM0_C6SC)>>7;
-	flag_FTM0_C7SC_status = (FLEX_TIMER_CHF & FTM0_C7SC)>>7;
-
-	FTM0_C0SC &= ~FLEX_TIMER_CHF;
-	FTM0_C1SC &= ~FLEX_TIMER_CHF;
-	FTM0_C2SC &= ~FLEX_TIMER_CHF;
 
 
-	if ( TRUE == flag_FTM0_C0SC_status){
-		FTM0_C0SC_counter++;
-		FTM0_C0SC_counter++;
-		FTM0_C0SC_counter++;
-	//	FTM0_C1SC_counter++;
-		//FTM0_C2SC_counter++;
-		flag_FTM0_C0SC_status = FALSE;
-		if ( CIEN_PUNTOS < FTM0_C0SC_counter ){
-			FTM0_C0SC_counter=FALSE;
-		}
+	FTM0_0_counter=FTM0_0_counter+step;
+	if( DIEZ_MIL_ARREGLO <= FTM0_0_counter ){
+		FTM0_0_counter=FTM0_0_counter-10000;
 	}
 
-	else if (TRUE == flag_FTM0_C1SC_status){
-		FTM0_C1SC_counter++;
-		flag_FTM0_C1SC_status = FALSE;
-		if ( CIEN_PUNTOS < FTM0_C1SC_counter ){
-			FTM0_C1SC_counter=FALSE;
-		}
+	//si asgreagamos mas lineas se desajusta la frdcuencia
+
+
+	FTM0_1_counter=FTM0_1_counter+step2;
+	if( DIEZ_MIL_ARREGLO <= FTM0_1_counter ){
+		FTM0_1_counter=(FTM0_1_counter-10000);
 	}
 
-
-	else if ( TRUE == flag_FTM0_C2SC_status){
-		FTM0_C2SC_counter++;
-//		FTM_CnV(FTM_0, Channel2, MOD * 2);
-		flag_FTM0_C2SC_status = FALSE;
-		if ( CIEN_PUNTOS < FTM0_C2SC_counter ){
-			FTM0_C2SC_counter=FALSE;
-		}
+	FTM0_2_counter=FTM0_2_counter+step3;
+	if( DIEZ_MIL_ARREGLO <= FTM0_2_counter ){
+		FTM0_2_counter=(FTM0_2_counter-10000);
 	}
 
-
-	else if ( TRUE == flag_FTM0_C3SC_status && CIEN_PUNTOS >= FTM0_C3SC_counter ){
-		FTM0_C3SC_counter++;
-		flag_FTM0_C3SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C3SC_counter ){
-			FTM0_C3SC_counter=FALSE;
-		}
+	FTM0_3_counter=FTM0_3_counter+step4;
+	if( DIEZ_MIL_ARREGLO <= FTM0_3_counter ){
+		FTM0_3_counter=(FTM0_3_counter-10000);
 	}
 
-
-	else if ( TRUE == flag_FTM0_C4SC_status && CIEN_PUNTOS >= FTM0_C4SC_counter ){
-		FTM0_C4SC_counter++;
-		flag_FTM0_C4SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C4SC_counter ){
-			FTM0_C4SC_counter=FALSE;
-		}
+	FTM0_4_counter=FTM0_4_counter+step5;
+	if( DIEZ_MIL_ARREGLO <= FTM0_4_counter ){
+		FTM0_4_counter=(FTM0_4_counter-10000);
 	}
 
-
-	else if ( TRUE == flag_FTM0_C5SC_status && CIEN_PUNTOS >= FTM0_C5SC_counter ){
-		FTM0_C5SC_counter++;
-		flag_FTM0_C5SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C5SC_counter ){
-			FTM0_C5SC_counter=FALSE;
-		}
+	FTM0_5_counter=FTM0_5_counter+step6;
+	if( DIEZ_MIL_ARREGLO <= FTM0_5_counter ){
+		FTM0_5_counter=(FTM0_5_counter-10000);
 	}
 
-
-	else if ( TRUE == flag_FTM0_C6SC_status && CIEN_PUNTOS >= FTM0_C6SC_counter ){
-		FTM0_C6SC_counter++;
-		flag_FTM0_C6SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C6SC_counter ){
-			FTM0_C6SC_counter=FALSE;
-		}
+	FTM0_6_counter=FTM0_6_counter+step7;
+	if( DIEZ_MIL_ARREGLO <= FTM0_6_counter ){
+		FTM0_6_counter=(FTM0_6_counter-10000);
+	}
+	FTM0_7_counter=FTM0_7_counter+step8;
+	if( DIEZ_MIL_ARREGLO <= FTM0_7_counter ){
+		FTM0_7_counter=(FTM0_7_counter-10000);
 	}
 
+	FTM0_8_counter=FTM0_8_counter+step9;
+	if( DIEZ_MIL_ARREGLO <= FTM0_8_counter ){
+		FTM0_8_counter=(FTM0_8_counter-10000);
+	}
 
-	else if ( TRUE == flag_FTM0_C7SC_status && CIEN_PUNTOS >= FTM0_C7SC_counter ){
-		FTM0_C7SC_counter++;
-		flag_FTM0_C7SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM0_C7SC_counter ){
-			FTM0_C7SC_counter=FALSE;
-		}
+	FTM0_9_counter=FTM0_9_counter+step10;
+	if( DIEZ_MIL_ARREGLO <= FTM0_9_counter ){
+		FTM0_9_counter=(FTM0_9_counter-10000);
+	}
+
+	FTM0_10_counter=FTM0_10_counter+step11;
+	if( DIEZ_MIL_ARREGLO <= FTM0_10_counter ){
+		FTM0_10_counter=(FTM0_10_counter-10000);
+	}
+
+	FTM0_11_counter=FTM0_11_counter+step12;
+	if( DIEZ_MIL_ARREGLO <= FTM0_11_counter ){
+		FTM0_11_counter=(FTM0_11_counter-10000);
+	}
+
+	FTM0_12_counter=FTM0_12_counter+step13;
+	if( DIEZ_MIL_ARREGLO <= FTM0_12_counter ){
+		FTM0_12_counter=(FTM0_12_counter-10000);
+	}
+	FTM0_13_counter=FTM0_13_counter+step14;
+	if( FTM0_13_counter <= FTM0_13_counter ){
+		FTM0_13_counter=(FTM0_13_counter-10000);
+	}
+
+	FTM0_14_counter=FTM0_14_counter+step15;
+	if( DIEZ_MIL_ARREGLO <= FTM0_14_counter ){
+		FTM0_14_counter=(FTM0_14_counter-10000);
+	}
+
+	FTM0_15_counter=FTM0_15_counter+step16;
+	if( DIEZ_MIL_ARREGLO <= FTM0_15_counter ){
+		FTM0_15_counter=(FTM0_15_counter-10000);
 	}
 
 
 
-//	if (PRIMER_VALOR == flag){
-//		cntTimerValue = (float)FTM0_C0V;
-//		flag++;
-//	} else if (SEGUNDO_VALOR == flag) {
-//		cntTimerValue2 = (float)FTM0_C0V;
-//
-//		freq_per();
-//
-//		flag = 0;
-//	}
+
+
+
+
+
 
 }
 
-void FTM2_IRQHandler(){
-	FTM2_SC &= ~FLEX_TIMER_TOF;
-	//GPIO_tooglePIN(GPIOB,BIT18);
+void FTM1_IRQHandler(){
+	FTM1_SC &= ~FLEX_TIMER_TOF;
 
-//	flag_FTM2_C0SC_status = FLEX_TIMER_CHF & FTM2_C0SC;
-//	flag_FTM2_C1SC_status = FLEX_TIMER_CHF & FTM2_C1SC;
-//
-//
-//	if ( TRUE == flag_FTM2_C0SC_status && CIEN_PUNTOS >= FTM2_C0SC_counter ){
-//		FTM2_C0SC_counter++;
-//		flag_FTM2_C0SC_status = FALSE;
-//		if ( CIEN_PUNTOS == FTM2_C0SC_counter ){
-//			FTM2_C0SC_counter=FALSE;
-//		}
-//	}
-//
-//	else if ( TRUE == flag_FTM2_C1SC_status && CIEN_PUNTOS >= FTM2_C1SC_counter ){
-//		FTM2_C1SC_counter++;
-//		flag_FTM2_C1SC_status = FALSE;
-//		if ( CIEN_PUNTOS == FTM2_C1SC_counter ){
-//			FTM2_C1SC_counter=FALSE;
-//		}
-//	}
 
-sine(FTM0_C0SC_counter,FTM0_C1SC_counter,FTM0_C2SC_counter);
+sine( FTM0_0_counter,  FTM0_1_counter, FTM0_2_counter, FTM0_3_counter, FTM0_4_counter, FTM0_5_counter, FTM0_6_counter, FTM0_7_counter, FTM0_8_counter, FTM0_9_counter, FTM0_10_counter, FTM0_11_counter, FTM0_12_counter, FTM0_13_counter, FTM0_14_counter, FTM0_15_counter);
+
 
 }
 
 
-void FTM3_IRQHandler(){
-	FTM3_SC &= ~FLEX_TIMER_TOF;
-	//GPIO_tooglePIN(GPIOB,BIT18);
 
-	flag_FTM3_C0SC_status = FLEX_TIMER_CHF & FTM3_C0SC;
-	flag_FTM3_C1SC_status = FLEX_TIMER_CHF & FTM3_C1SC;
-	flag_FTM3_C2SC_status = FLEX_TIMER_CHF & FTM3_C2SC;
-	flag_FTM3_C3SC_status = FLEX_TIMER_CHF & FTM3_C3SC;
-	flag_FTM3_C4SC_status = FLEX_TIMER_CHF & FTM3_C4SC;
-	flag_FTM3_C5SC_status = FLEX_TIMER_CHF & FTM3_C5SC;
-	flag_FTM3_C6SC_status = FLEX_TIMER_CHF & FTM3_C6SC;
-	flag_FTM3_C7SC_status = FLEX_TIMER_CHF & FTM3_C7SC;
-
-
-
-	if ( TRUE == flag_FTM3_C0SC_status && CIEN_PUNTOS >= FTM3_C0SC_counter ){
-		FTM3_C0SC_counter++;
-		flag_FTM3_C0SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C0SC_counter ){
-			FTM3_C0SC_counter=FALSE;
-		}
-	}
-
-	else if ( TRUE == flag_FTM3_C1SC_status && CIEN_PUNTOS >= FTM3_C1SC_counter ){
-		FTM3_C1SC_counter++;
-		flag_FTM3_C1SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C1SC_counter ){
-			FTM3_C1SC_counter=FALSE;
-		}
-	}
-
-
-	else if ( TRUE == flag_FTM3_C2SC_status && CIEN_PUNTOS >= FTM3_C2SC_counter ){
-		FTM3_C2SC_counter++;
-		flag_FTM3_C2SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C2SC_counter ){
-			FTM3_C2SC_counter=FALSE;
-		}
-	}
-
-
-	else if ( TRUE == flag_FTM3_C3SC_status && CIEN_PUNTOS >= FTM3_C3SC_counter ){
-		FTM3_C3SC_counter++;
-		flag_FTM3_C3SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C3SC_counter ){
-			FTM3_C3SC_counter=FALSE;
-		}
-	}
-
-
-	else if ( TRUE == flag_FTM3_C4SC_status && CIEN_PUNTOS >= FTM3_C4SC_counter ){
-		FTM3_C4SC_counter++;
-		flag_FTM3_C4SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C4SC_counter ){
-			FTM3_C4SC_counter=FALSE;
-		}
-	}
-
-
-	else if ( TRUE == flag_FTM3_C5SC_status && CIEN_PUNTOS >= FTM3_C5SC_counter ){
-		FTM3_C5SC_counter++;
-		flag_FTM3_C5SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C5SC_counter ){
-			FTM3_C5SC_counter=FALSE;
-		}
-	}
-
-
-	else if ( TRUE == flag_FTM3_C6SC_status && CIEN_PUNTOS >= FTM3_C6SC_counter ){
-		FTM3_C6SC_counter++;
-		flag_FTM3_C6SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C6SC_counter ){
-			FTM3_C6SC_counter=FALSE;
-		}
-	}
-
-
-	else if ( TRUE == flag_FTM3_C7SC_status && CIEN_PUNTOS >= FTM3_C7SC_counter ){
-		FTM3_C7SC_counter++;
-		flag_FTM3_C7SC_status = FALSE;
-		if ( CIEN_PUNTOS == FTM3_C7SC_counter ){
-			FTM3_C7SC_counter=FALSE;
-		}
-	}
-
-
-}
 
 
 void FTM_ClockGating(FTMType FTM){
@@ -427,13 +322,6 @@ void FTM_Init(const FTM_ConfigType * FTM_Config)
 	FTM_CONF(FTM_Config->FTM, FTM_Config->FTM_CONF_Mask);
 }
 
-//float frecuency_value(){
-//	return frequency;
-//}
 
-
-//void clean_frecuency(){
-//	frequency = 0;
-//}
 
 

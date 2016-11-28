@@ -11,9 +11,12 @@
 
 #include "DataTypeDefinitions.h"
 #include "MK64F12.h"
+#include "FlexTimer.h"
 
 
-void sine(uint8 FTM0_C0SC_counter, uint8 FTM0_C1SC_counter, uint8 FTM0_C2SC_counter);
+
+//void sine(uint16 FTM0_0_counter, uint16 FTM0_1_counter, uint16 FTM0_2_counter);
+void sine(uint16 FTM0_0_counter, uint16 FTM0_1_counter,uint16 FTM0_2_counter,uint16 FTM0_3_counter,uint16 FTM0_4_counter,uint16 FTM0_5_counter,uint16 FTM0_6_counter,uint16 FTM0_7_counter,uint16 FTM0_8_counter,uint16 FTM0_9_counter,uint16 FTM0_10_counter,uint16 FTM0_11_counter,uint16 FTM0_12_counter,uint16 FTM0_13_counter,uint16 FTM0_14_counter,uint16 FTM0_15_counter);
 //void sin(sint8 FTM0_C0SC_counter);
 /********************************************************************************************/
 /********************************************************************************************/
