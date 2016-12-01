@@ -203,15 +203,27 @@ void pos_Value(){
 		value_Xreal = value_X[3];
 	}
 
+//	if(value_Xreal < 30 && value_Xreal > 0){
+//		if(prom_CounterY > 1){
+//			write_Frequency( prom_EchoY*300/2,TRUE);
+//			prom_EchoY = FALSE;
+//			prom_CounterY = FALSE;
+//		}
+//		prom_EchoY += value_Yreal;
+//		prom_CounterY++;
+//	}else{
+//		write_Frequency(FALSE,FALSE);
+//	}
+
 	if(value_Xreal < 30 && value_Xreal > 0){
 		if(prom_CounterY > 1){
-			write_Frequency( prom_EchoY*300/2,TRUE);
+			write_Frequency( prom_EchoY*FSMRange(),TRUE);
 			prom_EchoY = FALSE;
 			prom_CounterY = FALSE;
 		}
 		prom_EchoY += value_Yreal;
 		prom_CounterY++;
 	}else{
-		write_Frequency(FALSE,FALSE);
+		write_Frequency(FSMRange(),FALSE);
 	}
 }

@@ -99,69 +99,69 @@ void FTM0_IRQHandler(){
 	if( DIEZ_MIL_ARREGLO <= FTM0_2_counter ){
 		FTM0_2_counter=(FTM0_2_counter-10000);
 	}
-//
-//	FTM0_3_counter=FTM0_3_counter+step[3];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_3_counter ){
-//		FTM0_3_counter=(FTM0_3_counter-10000);
-//	}
-//
-//	FTM0_4_counter=FTM0_4_counter+step[4];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_4_counter ){
-//		FTM0_4_counter=(FTM0_4_counter-10000);
-//	}
-//
-//	FTM0_5_counter=FTM0_5_counter+step[5];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_5_counter ){
-//		FTM0_5_counter=(FTM0_5_counter-10000);
-//	}
-//
-//	FTM0_6_counter=FTM0_6_counter+step[6];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_6_counter ){
-//		FTM0_6_counter=(FTM0_6_counter-10000);
-//	}
-//	FTM0_7_counter=FTM0_7_counter+step[7];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_7_counter ){
-//		FTM0_7_counter=(FTM0_7_counter-10000);
-//	}
-//
-//	FTM0_8_counter=FTM0_8_counter+step[8];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_8_counter ){
-//		FTM0_8_counter=(FTM0_8_counter-10000);
-//	}
-//
-//	FTM0_9_counter=FTM0_9_counter+step[9];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_9_counter ){
-//		FTM0_9_counter=(FTM0_9_counter-10000);
-//	}
-//
-//	FTM0_10_counter=FTM0_10_counter+step[10];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_10_counter ){
-//		FTM0_10_counter=(FTM0_10_counter-10000);
-//	}
-//
-//	FTM0_11_counter=FTM0_11_counter+step[11];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_11_counter ){
-//		FTM0_11_counter=(FTM0_11_counter-10000);
-//	}
-//
-//	FTM0_12_counter=FTM0_12_counter+step[12];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_12_counter ){
-//		FTM0_12_counter=(FTM0_12_counter-10000);
-//	}
-//	FTM0_13_counter=FTM0_13_counter+step[13];
-//	if( FTM0_13_counter <= FTM0_13_counter ){
-//		FTM0_13_counter=(FTM0_13_counter-10000);
-//	}
-//
-//	FTM0_14_counter=FTM0_14_counter+step[14];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_14_counter ){
-//		FTM0_14_counter=(FTM0_14_counter-10000);
-//	}
-//
-//	FTM0_15_counter=FTM0_15_counter+step[15];
-//	if( DIEZ_MIL_ARREGLO <= FTM0_15_counter ){
-//		FTM0_15_counter=(FTM0_15_counter-10000);
-//	}
+
+	FTM0_3_counter=FTM0_3_counter+step[3];
+	if( DIEZ_MIL_ARREGLO <= FTM0_3_counter ){
+		FTM0_3_counter=(FTM0_3_counter-10000);
+	}
+
+	FTM0_4_counter=FTM0_4_counter+step[4];
+	if( DIEZ_MIL_ARREGLO <= FTM0_4_counter ){
+		FTM0_4_counter=(FTM0_4_counter-10000);
+	}
+
+	FTM0_5_counter=FTM0_5_counter+step[5];
+	if( DIEZ_MIL_ARREGLO <= FTM0_5_counter ){
+		FTM0_5_counter=(FTM0_5_counter-10000);
+	}
+
+	FTM0_6_counter=FTM0_6_counter+step[6];
+	if( DIEZ_MIL_ARREGLO <= FTM0_6_counter ){
+		FTM0_6_counter=(FTM0_6_counter-10000);
+	}
+	FTM0_7_counter=FTM0_7_counter+step[7];
+	if( DIEZ_MIL_ARREGLO <= FTM0_7_counter ){
+		FTM0_7_counter=(FTM0_7_counter-10000);
+	}
+
+	FTM0_8_counter=FTM0_8_counter+step[8];
+	if( DIEZ_MIL_ARREGLO <= FTM0_8_counter ){
+		FTM0_8_counter=(FTM0_8_counter-10000);
+	}
+
+	FTM0_9_counter=FTM0_9_counter+step[9];
+	if( DIEZ_MIL_ARREGLO <= FTM0_9_counter ){
+		FTM0_9_counter=(FTM0_9_counter-10000);
+	}
+
+	FTM0_10_counter=FTM0_10_counter+step[10];
+	if( DIEZ_MIL_ARREGLO <= FTM0_10_counter ){
+		FTM0_10_counter=(FTM0_10_counter-10000);
+	}
+
+	FTM0_11_counter=FTM0_11_counter+step[11];
+	if( DIEZ_MIL_ARREGLO <= FTM0_11_counter ){
+		FTM0_11_counter=(FTM0_11_counter-10000);
+	}
+
+	FTM0_12_counter=FTM0_12_counter+step[12];
+	if( DIEZ_MIL_ARREGLO <= FTM0_12_counter ){
+		FTM0_12_counter=(FTM0_12_counter-10000);
+	}
+	FTM0_13_counter=FTM0_13_counter+step[13];
+	if( FTM0_13_counter <= FTM0_13_counter ){
+		FTM0_13_counter=(FTM0_13_counter-10000);
+	}
+
+	FTM0_14_counter=FTM0_14_counter+step[14];
+	if( DIEZ_MIL_ARREGLO <= FTM0_14_counter ){
+		FTM0_14_counter=(FTM0_14_counter-10000);
+	}
+
+	FTM0_15_counter=FTM0_15_counter+step[15];
+	if( DIEZ_MIL_ARREGLO <= FTM0_15_counter ){
+		FTM0_15_counter=(FTM0_15_counter-10000);
+	}
 	sine( FTM0_0_counter,  FTM0_1_counter, FTM0_2_counter, FTM0_3_counter, FTM0_4_counter, FTM0_5_counter, FTM0_6_counter, FTM0_7_counter, FTM0_8_counter, FTM0_9_counter, FTM0_10_counter, FTM0_11_counter, FTM0_12_counter, FTM0_13_counter, FTM0_14_counter, FTM0_15_counter);
 }
 
@@ -289,8 +289,8 @@ void clear_Range_Counter(){
 	Range_counter = FALSE;
 }
 
-void write_Frequency(uint16 frecuency, uint8 sensor){
-	frequency[sensor] = frecuency;
+void write_Frequency(uint16 frecuency, uint8 partial){
+	frequency[partial] = frecuency;
 }
 
 
