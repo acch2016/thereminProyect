@@ -53,6 +53,7 @@ int main(void)
 {
 	int mcg_clk_hz;
 	unsigned char modeMCG = 0;
+	uint16 Frequency_value;
 
 	mcg_clk_hz = fei_fbi(SLOW_IRC_FREQ,SLOW_IRC); //64 Hz ----> 32768
 	mcg_clk_hz = fbi_fbe(CLK_FREQ_HZ,LOW_POWER,EXTERNAL_CLOCK); //97.656KHz ----> 50MHz
@@ -116,7 +117,7 @@ int main(void)
 	/* This for loop should be replaced. By default this loop allows a single stepping. */
 
 	for (;;) {
-
+		Frequency_value = FSMRange();
 }
 	/* Never leave main */
 	return 0;
