@@ -11,7 +11,7 @@
 #include "DataTypeDefinitions.h"
 #include "GPIO.h"
 #include "DAC.h"
-
+#define MAX_VALUE_16B 65536
 
 #define FLEX_TIMER_0_CLOCK_GATING 0x01000000
 #define FLEX_TIMER_1_CLOCK_GATING 0x02000000
@@ -126,10 +126,20 @@ void FTM_updateCHValue(FTMType FTM, FTMChannelType channel, uint16 channelValue)
 
 void FTM_Init(const FTM_ConfigType * FTM_Config);
 
-float frecuency_value();
+uint8 status_echo();
 
-float temp_value();
-void clean_frecuency();
+void clear_echo();
+
+uint16 time_Value();
+
+void clear_Range_Counter();
+
+void set_echo();
+
+void freq_per();
+
+void write_Frequency(uint16 frecuency, uint8 sensor);
+
 
 //uint8 adding_sines();
 

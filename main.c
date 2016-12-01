@@ -33,6 +33,9 @@
 #include "FlexTimer.h"
 #include "stdio.h"
 #include "NVIC.h"
+#include "GPIO.h"
+#include "MotionSensor.h"
+#include "GlobalFunctions.h"
 
 #define CLK_FREQ_HZ 50000000  /* CLKIN0 frequency */
 #define SLOW_IRC_FREQ 32768	/*This is the approximate value for the slow irc*/
@@ -51,9 +54,9 @@
 
 int main(void)
 {
+
 	int mcg_clk_hz;
-	unsigned char modeMCG = 0;
-	uint16 Frequency_value;
+  	unsigned char modeMCG = 0;
 
 	mcg_clk_hz = fei_fbi(SLOW_IRC_FREQ,SLOW_IRC); //64 Hz ----> 32768
 	mcg_clk_hz = fbi_fbe(CLK_FREQ_HZ,LOW_POWER,EXTERNAL_CLOCK); //97.656KHz ----> 50MHz
@@ -65,17 +68,19 @@ int main(void)
 	printf("\nMCG mode =  %d\n",modeMCG);
 	printf("Clock Rate =  %d MHz\n",mcg_clk_hz);
 #endif
+
 	/* Write your code here */
+	ConfigurationSensor();
+
 	const FTM_ConfigType FTM0_Config={	FTM_0,
 			Channel0,
 			FLEX_TIMER_0_CLOCK_GATING,
-			FLEX_TIMER_TOIE|FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_1,
+			FLEX_TIMER_TOIE|FLEX_TIMER_CLKS_1|FLEX_TIMER_PS_2,
 			FLEX_TIMER_WPDIS,
-			0x096,//100
-			FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK,
+			0x0300,//0x96
+			FLEX_TIMER_MSA | FLEX_TIMER_ELSA ,
 			FTM_CONF_BDMMODE(3),
 			FALSE};
-
 
 	const FTM_ConfigType FTM1_Config={	FTM_1,
 			Channel0,
@@ -87,38 +92,25 @@ int main(void)
 			FTM_CONF_BDMMODE(3),
 			FALSE};
 
-
-
-
-
-
-
-	////////////////////////////////////////////DAC
 	SIM_SCGC2  |= SIM_SCGC2_DAC0_MASK;//clock gating del DAC0
 	DAC0_C0 |= DAC_C0_DACEN_MASK;//pin DAC enable
 	DAC0_C0 |= DAC_C0_DACRFS_MASK;//pin DAC reference Select
 	////////////////////////////////////////////DAC
 	freq_per();
 	FTM_Init(&FTM0_Config);
-	FTM_Init(&FTM1_Config);
-
-//	FTM_CnSC(FTM_0, Channel1, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
-//	FTM_CnV(FTM_0, Channel1, 0x01F4);//500Hz
-//	FTM_CnSC(FTM_0, Channel2, FLEX_TIMER_MSA | FLEX_TIMER_ELSA | FTM_CnSC_CHIE_MASK, FALSE);
-//	FTM_CnV(FTM_0, Channel2, 0x14D);//333Hz
-
-	/**Initialization of FlexTimer in output compare mode*/
+//	FTM_Init(&FTM1_Config);
+	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK; /**Activa reloj del PIT, bit 23 que corresponde a este número hexadecimal 0x800000*/
+	PIT_MCR = 0x00;/**Asegurarse que no se deshabilitan los PIT*/
 	NVIC_setBASEPRI_threshold(PRIORITY_10);
-	NVIC_enableInterruptAndPriotity(FTM0_IRQ,PRIORITY_8);
-	NVIC_enableInterruptAndPriotity(FTM1_IRQ,PRIORITY_8);
-
-	EnableInterrupts;/** Enabling Global interrupts with PRIMASK bit*/
-
-	/* This for loop should be replaced. By default this loop allows a single stepping. */
-
+	NVIC_enableInterruptAndPriotity(FTM0_IRQ,PRIORITY_6);
+	NVIC_enableInterruptAndPriotity(FTM1_IRQ,PRIORITY_6);
+	NVIC_enableInterruptAndPriotity(PIT_CH0_IRQ, PRIORITY_5);
+	NVIC_enableInterruptAndPriotity(FTM2_IRQ,PRIORITY_5);
+	EnableInterrupts;
 	for (;;) {
-		Frequency_value = FSMRange();
-}
+		pos_Value();
+		delay(5000);
+	}
 	/* Never leave main */
 	return 0;
 }
